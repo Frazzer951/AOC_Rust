@@ -16,3 +16,6 @@ Cargo.lock
 # IDE Files
 .vscode/
 .idea/
+
+# Secrets
+.session
