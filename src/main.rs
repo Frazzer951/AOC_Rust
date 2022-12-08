@@ -14,7 +14,7 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Adds files for year and day
-    Add { year: i32, day: i32 },
+    Add { year: u32, day: u32 },
 }
 
 fn main() {
@@ -23,7 +23,7 @@ fn main() {
     if let Some(command) = &cli.command {
         match command {
             Commands::Add { year, day } => {
-                println!("Adding files for Year: {year} Day: {day}")
+                utils::create_year_day(*year, *day);
             },
         }
     } else {
