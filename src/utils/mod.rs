@@ -1,9 +1,27 @@
+use std::collections::HashMap;
 use std::io::Write;
 use std::path::Path;
 
 use fs_err as fs;
 use fs_err::OpenOptions;
+use lazy_static::lazy_static;
 use reqwest::header;
+use serde_json::value::{to_value, Value};
+use tera::{try_get_value, Context, Error, Result, Tera};
+
+lazy_static! {
+    pub static ref TEMPLATES: Tera = {
+        let mut tera = match Tera::new("templates/**/*") {
+            Ok(t) => t,
+            Err(e) => {
+                println!("Parsing error(s): {}", e);
+                ::std::process::exit(1);
+            },
+        };
+        tera.register_filter("zero_pad", zero_pad);
+        tera
+    };
+}
 
 pub fn read_input(year: u32, day: u32) -> Vec<String> {
     let filename = format!("./inputs/{year}/day_{day}.txt");
@@ -59,14 +77,25 @@ fn get_session() -> String {
     }
 }
 
-pub fn create_year_day(year: u32, day: u32) {
-    let mut template = match fs::read_to_string("./templates/template.txt") {
-        Ok(contents) => contents,
-        Err(e) => panic!("{e}"),
+pub fn zero_pad(value: &Value, args: &HashMap<String, Value>) -> Result<Value> {
+    let s = try_get_value!("zero_pad", "value", u32, value);
+    let width = match args.get("width") {
+        Some(val) => try_get_value!("zero_pad", "width", usize, val),
+        None => return Err(Error::msg("Filter `zero_pad` expected an arg called `width`")),
     };
-    template = template.replace("{{year}}", &format!("{year}"));
-    template = template.replace("{{day}}", &format!("{day}"));
-    template = template.replace("{{day_02}}", &format!("{day:0width$}", width = 2));
+
+    Ok(to_value(&format!("{s:0width$}", width = width)).unwrap())
+}
+
+pub fn create_year_day(year: u32, day: u32) {
+    let mut context = Context::new();
+    context.insert("year", &year);
+    context.insert("day", &day);
+
+    let content = match TEMPLATES.render("day.rs", &context) {
+        Ok(s) => s,
+        Err(e) => panic!("Error: {e}"),
+    };
 
     let filepath = format!("./src/y{year}");
     let filename = format!("{filepath}/day_{day}.rs");
@@ -76,7 +105,7 @@ pub fn create_year_day(year: u32, day: u32) {
         println!("Creating {filename}");
         fs::create_dir_all(filepath).unwrap();
         let mut file = fs::File::create(filename).unwrap();
-        file.write_all(template.as_bytes()).unwrap();
+        file.write_all(content.as_bytes()).unwrap();
 
         // Append mod to mod.rs file.
         let mod_file = format!("./src/y{year}/mod.rs");
