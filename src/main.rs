@@ -44,4 +44,5 @@ fn run_years(years: Years) {
 fn y2022() {
     y2022::day_1::run();
     y2022::day_2::run();
+    y2022::day_3::run();
 }
