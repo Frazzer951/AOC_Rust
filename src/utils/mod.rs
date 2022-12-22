@@ -84,7 +84,7 @@ pub fn zero_pad(value: &Value, args: &HashMap<String, Value>) -> Result<Value> {
         None => return Err(Error::msg("Filter `zero_pad` expected an arg called `width`")),
     };
 
-    Ok(to_value(&format!("{s:0width$}", width = width)).unwrap())
+    Ok(to_value(format!("{s:0width$}", width = width)).unwrap())
 }
 
 pub fn create_year_day(year: u32, day: u32) {
