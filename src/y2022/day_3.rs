@@ -56,11 +56,13 @@ fn part_2(input: Vec<String>) -> i32 {
 pub fn run() {
     let input = crate::utils::read_input(2022, 3);
 
+    println!(" Day 03:");
+
     let p1 = part_1(input.clone());
-    println!("2022 Day 03 - P1 - {p1}");
+    println!("    Part 1 - {p1}");
 
     let p2 = part_2(input);
-    println!("2022 Day 03 - P2 - {p2}");
+    println!("    Part 2 - {p2}");
 }
 
 #[cfg(test)]
