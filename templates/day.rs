@@ -22,15 +22,19 @@ pub fn run() {
 mod tests {
     use super::*;
 
+    fn example_input() -> Vec<String> {
+        vec![""].iter().map(|s| String::from(*s)).collect::<Vec<_>>()
+    }
+
     #[test]
     fn test_p1_e1() {
-        let input = vec![""].iter().map(|s| String::from(*s)).collect::<Vec<_>>();
+        let input = example_input();
         assert_eq!(part_1(input), 0);
     }
 
     #[test]
     fn test_p2_e1() {
-        let input = vec![""].iter().map(|s| String::from(*s)).collect::<Vec<_>>();
+        let input = example_input();
         assert_eq!(part_2(input), 0);
     }
 }
