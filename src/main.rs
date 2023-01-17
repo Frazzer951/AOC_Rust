@@ -1,7 +1,8 @@
 use clap::{Parser, Subcommand};
 
 pub mod utils;
-mod y2022;
+pub mod y2022;
+mod years;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -15,6 +16,10 @@ struct Cli {
 enum Commands {
     /// Adds files for year and day
     Add { year: u32, day: u32 },
+    /// Run a specific year and day
+    RunDay { year: u32, day: u32 },
+    /// Run a specific year
+    RunYear { year: u32 },
 }
 
 fn main() {
@@ -25,27 +30,12 @@ fn main() {
             Commands::Add { year, day } => {
                 utils::create_year_day(*year, *day);
             },
+            Commands::RunDay { year, day } => {
+                years::run_years(years::Years::new().add_year(years::Year::new(*year).set_day(*day)))
+            },
+            Commands::RunYear { year } => years::run_years(years::Years::new().add_year(years::Year::new(*year))),
         }
     } else {
-        run_years(Years { y2022: true })
+        years::run_years(years::Years::new().add_year(years::Year::new(2022)))
     }
-}
-
-struct Years {
-    y2022: bool,
-}
-
-fn run_years(years: Years) {
-    if years.y2022 {
-        y2022()
-    }
-}
-
-fn y2022() {
-    println!("2022");
-    y2022::day_1::run();
-    y2022::day_2::run();
-    y2022::day_3::run();
-    y2022::day_4::run();
-    y2022::day_5::run();
 }
