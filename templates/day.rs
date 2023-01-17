@@ -27,13 +27,13 @@ mod tests {
     }
 
     #[test]
-    fn test_p1_e1() {
+    fn test_p1() {
         let input = example_input();
         assert_eq!(part_1(input), 0);
     }
 
     #[test]
-    fn test_p2_e1() {
+    fn test_p2() {
         let input = example_input();
         assert_eq!(part_2(input), 0);
     }
