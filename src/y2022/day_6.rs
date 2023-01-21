@@ -51,22 +51,23 @@ pub fn run() {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use test_case::test_case;
 
-    #[test]
-    fn test_p1() {
-        assert_eq!(part_1("mjqjpqmgbljsphdztnvjfqwrcgsmlb".to_owned()), 7);
-        assert_eq!(part_1("bvwbjplbgvbhsrlpgdmjqwftvncz".to_owned()), 5);
-        assert_eq!(part_1("nppdvjthqldpwncqszvftbrmjlhg".to_owned()), 6);
-        assert_eq!(part_1("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg".to_owned()), 10);
-        assert_eq!(part_1("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw".to_owned()), 11);
+    #[test_case("mjqjpqmgbljsphdztnvjfqwrcgsmlb", 7)]
+    #[test_case("bvwbjplbgvbhsrlpgdmjqwftvncz", 5)]
+    #[test_case("nppdvjthqldpwncqszvftbrmjlhg", 6)]
+    #[test_case("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 10)]
+    #[test_case("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 11)]
+    fn test_p1(input: &str, index: usize) {
+        assert_eq!(part_1(input.to_owned()), index);
     }
 
-    #[test]
-    fn test_p2() {
-        assert_eq!(part_2("mjqjpqmgbljsphdztnvjfqwrcgsmlb".to_owned()), 19);
-        assert_eq!(part_2("bvwbjplbgvbhsrlpgdmjqwftvncz".to_owned()), 23);
-        assert_eq!(part_2("nppdvjthqldpwncqszvftbrmjlhg".to_owned()), 23);
-        assert_eq!(part_2("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg".to_owned()), 29);
-        assert_eq!(part_2("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw".to_owned()), 26);
+    #[test_case("mjqjpqmgbljsphdztnvjfqwrcgsmlb", 19)]
+    #[test_case("bvwbjplbgvbhsrlpgdmjqwftvncz", 23)]
+    #[test_case("nppdvjthqldpwncqszvftbrmjlhg", 23)]
+    #[test_case("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 29)]
+    #[test_case("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 26)]
+    fn test_p2(input: &str, index: usize) {
+        assert_eq!(part_2(input.to_owned()), index);
     }
 }
