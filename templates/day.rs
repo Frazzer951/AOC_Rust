@@ -29,12 +29,12 @@ mod tests {
     #[test]
     fn test_p1() {
         let input = example_input();
-        assert_eq!(part_1(input), 0);
+        assert_eq!(part_1(input), 1);
     }
 
     #[test]
     fn test_p2() {
         let input = example_input();
-        assert_eq!(part_2(input), 0);
+        assert_eq!(part_2(input), 1);
     }
 }
