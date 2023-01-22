@@ -81,4 +81,7 @@ pub fn y2022(days: Days) {
     if days.all || days.days.contains(&7) {
         y2022::day_7::run();
     }
+    if days.all || days.days.contains(&8) {
+        y2022::day_8::run();
+    }
 }
