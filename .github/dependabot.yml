@@ -3,11 +3,14 @@ version: 2
 updates:
   - package-ecosystem: "cargo"
     directory: "/"
-    target-branch: "develop"
+    target-branch: "main"
     schedule:
       interval: "daily"
     allow:
       - dependency-type: "direct"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
     commit-message:
       prefix: "chore:"
     assignees:
@@ -15,7 +18,7 @@ updates:
 
   - package-ecosystem: "github-actions"
     directory: "/"
-    target-branch: "develop"
+    target-branch: "main"
     schedule:
       interval: "daily"
     allow:
