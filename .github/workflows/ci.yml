@@ -1,6 +1,10 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
 
 jobs:
   clippy:
@@ -11,8 +15,6 @@ jobs:
 
       - name: Rust setup
         run: rustup toolchain install stable --profile minimal
-
-      # - run: rustup component add clippy
 
       - name: Cargo Clippy
         run: cargo clippy -- -D warnings #-W clippy::pedantic
@@ -25,8 +27,6 @@ jobs:
 
       - name: Rust setup
         run: rustup toolchain install stable --profile minimal
-
-        # - run: rustup component add rustfmt
 
       - name: Cargo Format
         run: cargo fmt --all -- --check
