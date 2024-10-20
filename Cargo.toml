@@ -7,14 +7,14 @@ version = "0.1.0"
 
 [dependencies]
 camino      = "1.1"
-clap        = { version = "4.0", features = ["derive"] }
-fs-err      = "2.9"
-itertools   = "0.10"
-lazy_static = "1.4"
+clap        = { version = "4.5", features = ["derive"] }
+fs-err      = "2.11"
+itertools   = "0.13"
+lazy_static = "1.5"
 nom         = "7.1"
-reqwest     = { version = "0.11", features = ["blocking", "cookies"] }
+reqwest     = { version = "0.12", features = ["blocking", "cookies"] }
 serde_json  = "1.0"
-tera        = "1.17"
+tera        = "1.20"
 
 [dev-dependencies]
-test-case = "3.1"
+test-case = "3.3"
