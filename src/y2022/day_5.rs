@@ -186,7 +186,7 @@ mod tests {
     use super::*;
 
     fn example_input() -> Vec<String> {
-        vec![
+        [
             "    [D]    ",
             "[N] [C]    ",
             "[Z] [M] [P]",

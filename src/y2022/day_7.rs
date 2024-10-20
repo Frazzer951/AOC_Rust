@@ -145,8 +145,8 @@ fn build_tree(input: Vec<String>) -> Directory {
                 },
             },
             Line::Entry(entry) => match entry {
-                Entry::Dir(_) => {},
-                Entry::File(size, _) => dir_tree.add_file(&cur_dir, size),
+                Entry::Dir(_path) => {},
+                Entry::File(size, _path) => dir_tree.add_file(&cur_dir, size),
             },
         }
     }

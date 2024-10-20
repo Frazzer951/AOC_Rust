@@ -149,7 +149,7 @@ mod tests {
     use super::*;
 
     fn example_input() -> Vec<String> {
-        vec!["30373", "25512", "65332", "33549", "35390"]
+        ["30373", "25512", "65332", "33549", "35390"]
             .iter()
             .map(|s| String::from(*s))
             .collect::<Vec<_>>()

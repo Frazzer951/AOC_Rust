@@ -120,14 +120,14 @@ mod tests {
 
     #[test]
     fn test_p1_e1() {
-        let input = vec!["A Y", "B X", "C Z"].iter().map(|s| String::from(*s)).collect::<Vec<_>>();
+        let input = ["A Y", "B X", "C Z"].iter().map(|s| String::from(*s)).collect::<Vec<_>>();
 
         assert_eq!(part_1(input), 15);
     }
 
     #[test]
     fn test_p2_e1() {
-        let input = vec!["A Y", "B X", "C Z"].iter().map(|s| String::from(*s)).collect::<Vec<_>>();
+        let input = ["A Y", "B X", "C Z"].iter().map(|s| String::from(*s)).collect::<Vec<_>>();
 
         assert_eq!(part_2(input), 12);
     }

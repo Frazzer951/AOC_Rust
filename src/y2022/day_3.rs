@@ -71,7 +71,7 @@ mod tests {
 
     #[test]
     fn test_p1_e1() {
-        let input = vec![
+        let input = [
             "vJrwpWtwJgWrhcsFMMfFFhFp",
             "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
             "PmmdzqPrVvPwwTWBwg",
@@ -87,7 +87,7 @@ mod tests {
 
     #[test]
     fn test_p2_e1() {
-        let input = vec![
+        let input = [
             "vJrwpWtwJgWrhcsFMMfFFhFp",
             "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
             "PmmdzqPrVvPwwTWBwg",
