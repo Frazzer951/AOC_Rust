@@ -1,7 +1,8 @@
 use clap::{Parser, Subcommand};
 
-pub mod utils;
-pub mod y2022;
+mod advent_of_code;
+mod utils;
+mod y2022;
 mod years;
 
 #[derive(Parser)]
@@ -24,7 +25,7 @@ enum Commands {
 
 fn main() {
     let cli = Cli::parse();
-    let aoc = years::AdventOfCode::new();
+    let aoc = advent_of_code::AdventOfCode::new();
 
     match &cli.command {
         Some(Commands::Add { year, day }) => {
