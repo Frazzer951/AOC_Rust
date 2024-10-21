@@ -1,3 +1,21 @@
+use crate::years::Day;
+
+pub struct AocDay;
+
+impl Day for AocDay {
+    fn run(&self) {
+        let input = crate::utils::read_input(2022, 2);
+
+        println!(" Day 02:");
+
+        let p1 = part_1(input.clone());
+        println!("    Part 1 - {p1}");
+
+        let p2 = part_2(input);
+        println!("    Part 2 - {p2}");
+    }
+}
+
 #[derive(Debug, Clone, Copy)]
 enum Moves {
     Rock,
@@ -48,8 +66,12 @@ impl GameResult {
 
 fn get_result(p1: &Moves, p2: &Moves) -> GameResult {
     match (p1, p2) {
-        (Moves::Rock, Moves::Rock) | (Moves::Paper, Moves::Paper) | (Moves::Scissors, Moves::Scissors) => GameResult::Tie,
-        (Moves::Rock, Moves::Scissors) | (Moves::Scissors, Moves::Paper) | (Moves::Paper, Moves::Rock) => GameResult::Win,
+        (Moves::Rock, Moves::Rock)
+        | (Moves::Paper, Moves::Paper)
+        | (Moves::Scissors, Moves::Scissors) => GameResult::Tie,
+        (Moves::Rock, Moves::Scissors)
+        | (Moves::Scissors, Moves::Paper)
+        | (Moves::Paper, Moves::Rock) => GameResult::Win,
         _ => GameResult::Loss,
     }
 }
@@ -102,32 +124,26 @@ fn part_2(input: Vec<String>) -> i32 {
     score
 }
 
-pub fn run() {
-    let input = crate::utils::read_input(2022, 2);
-
-    println!(" Day 02:");
-
-    let p1 = part_1(input.clone());
-    println!("    Part 1 - {p1}");
-
-    let p2 = part_2(input);
-    println!("    Part 2 - {p2}");
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn test_p1_e1() {
-        let input = ["A Y", "B X", "C Z"].iter().map(|s| String::from(*s)).collect::<Vec<_>>();
+        let input = ["A Y", "B X", "C Z"]
+            .iter()
+            .map(|s| String::from(*s))
+            .collect::<Vec<_>>();
 
         assert_eq!(part_1(input), 15);
     }
 
     #[test]
     fn test_p2_e1() {
-        let input = ["A Y", "B X", "C Z"].iter().map(|s| String::from(*s)).collect::<Vec<_>>();
+        let input = ["A Y", "B X", "C Z"]
+            .iter()
+            .map(|s| String::from(*s))
+            .collect::<Vec<_>>();
 
         assert_eq!(part_2(input), 12);
     }

@@ -1,3 +1,4 @@
+use crate::years::Day;
 use itertools::Itertools;
 use nom::{
     branch::alt,
@@ -7,6 +8,22 @@ use nom::{
     Finish, IResult,
 };
 use std::fmt;
+
+pub struct AocDay;
+
+impl Day for AocDay {
+    fn run(&self) {
+        let input = crate::utils::read_input(2022, 5);
+
+        println!(" Day 05:");
+
+        let p1 = part_1(input.clone());
+        println!("    Part 1 - {p1}");
+
+        let p2 = part_2(input);
+        println!("    Part 2 - {p2}");
+    }
+}
 
 #[derive(PartialEq, Eq, Clone, Copy)]
 struct Crate(char);
@@ -71,7 +88,9 @@ fn parse_hole(i: &str) -> IResult<&str, ()> {
 }
 
 fn parse_number(i: &str) -> IResult<&str, usize> {
-    map_res(take_while1(|c: char| c.is_ascii_digit()), |s: &str| s.parse::<usize>())(i)
+    map_res(take_while1(|c: char| c.is_ascii_digit()), |s: &str| {
+        s.parse::<usize>()
+    })(i)
 }
 
 fn parse_pile_number(i: &str) -> IResult<&str, usize> {
@@ -114,7 +133,13 @@ fn transpose_rev<T>(v: Vec<Vec<Option<T>>>) -> Vec<Vec<T>> {
     let len = v[0].len();
     let mut iters: Vec<_> = v.into_iter().map(|n| n.into_iter()).collect();
     (0..len)
-        .map(|_| iters.iter_mut().rev().filter_map(|n| n.next().unwrap()).collect::<Vec<T>>())
+        .map(|_| {
+            iters
+                .iter_mut()
+                .rev()
+                .filter_map(|n| n.next().unwrap())
+                .collect::<Vec<T>>()
+        })
         .collect()
 }
 
@@ -122,7 +147,12 @@ fn parse_input(input: Vec<String>) -> (Vec<Vec<Crate>>, Vec<Instruction>) {
     let mut lines = input.iter();
 
     let crate_lines: Vec<_> = (&mut lines)
-        .map_while(|line| all_consuming(parse_crate_line)(line).finish().ok().map(|(_, line)| line))
+        .map_while(|line| {
+            all_consuming(parse_crate_line)(line)
+                .finish()
+                .ok()
+                .map(|(_, line)| line)
+        })
         .collect();
 
     let crate_columns = transpose_rev(crate_lines);
@@ -167,18 +197,6 @@ fn part_2(input: Vec<String>) -> String {
     }
 
     piles.0.iter().map(|pile| *pile.last().unwrap()).join("")
-}
-
-pub fn run() {
-    let input = crate::utils::read_input(2022, 5);
-
-    println!(" Day 05:");
-
-    let p1 = part_1(input.clone());
-    println!("    Part 1 - {p1}");
-
-    let p2 = part_2(input);
-    println!("    Part 2 - {p2}");
 }
 
 #[cfg(test)]

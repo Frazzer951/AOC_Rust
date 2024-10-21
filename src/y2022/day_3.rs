@@ -1,4 +1,21 @@
+use crate::years::Day;
 use std::collections::{HashMap, HashSet};
+
+pub struct AocDay;
+
+impl Day for AocDay {
+    fn run(&self) {
+        let input = crate::utils::read_input(2022, 3);
+
+        println!(" Day 03:");
+
+        let p1 = part_1(input.clone());
+        println!("    Part 1 - {p1}");
+
+        let p2 = part_2(input);
+        println!("    Part 2 - {p2}");
+    }
+}
 
 fn part_1(input: Vec<String>) -> i32 {
     let alphabet: HashMap<char, i32> = (b'a'..=b'z')
@@ -30,7 +47,10 @@ fn part_2(input: Vec<String>) -> i32 {
         .enumerate()
         .map(|(index, ch)| (ch as char, index as i32 + 1))
         .collect();
-    let groups = input.chunks_exact(3).map(|x| x.to_vec()).collect::<Vec<_>>();
+    let groups = input
+        .chunks_exact(3)
+        .map(|x| x.to_vec())
+        .collect::<Vec<_>>();
     let mut sum = 0;
 
     for group in groups {
@@ -51,18 +71,6 @@ fn part_2(input: Vec<String>) -> i32 {
     }
 
     sum
-}
-
-pub fn run() {
-    let input = crate::utils::read_input(2022, 3);
-
-    println!(" Day 03:");
-
-    let p1 = part_1(input.clone());
-    println!("    Part 1 - {p1}");
-
-    let p2 = part_2(input);
-    println!("    Part 2 - {p2}");
 }
 
 #[cfg(test)]

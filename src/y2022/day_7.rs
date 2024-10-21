@@ -1,3 +1,4 @@
+use crate::years::Day;
 use camino::Utf8PathBuf;
 use nom::{
     branch::alt,
@@ -8,8 +9,27 @@ use nom::{
 };
 use std::collections::HashMap;
 
+pub struct AocDay;
+
+impl Day for AocDay {
+    fn run(&self) {
+        let input = crate::utils::read_input(2022, 7);
+
+        println!(" Day 07:");
+
+        let p1 = part_1(input.clone());
+        println!("    Part 1 - {p1}");
+
+        let p2 = part_2(input);
+        println!("    Part 2 - {p2}");
+    }
+}
+
 fn parse_path(i: &str) -> IResult<&str, Utf8PathBuf> {
-    map(take_while1(|c: char| "abcdefghijklmnopqrstuvwxyz./".contains(c)), Into::into)(i)
+    map(
+        take_while1(|c: char| "abcdefghijklmnopqrstuvwxyz./".contains(c)),
+        Into::into,
+    )(i)
 }
 
 #[derive(Debug)]
@@ -72,7 +92,10 @@ enum Line {
 }
 
 fn parse_line(i: &str) -> IResult<&str, Line> {
-    alt((map(parse_command, Line::Command), map(parse_entry, Line::Entry)))(i)
+    alt((
+        map(parse_command, Line::Command),
+        map(parse_entry, Line::Entry),
+    ))(i)
 }
 
 #[derive(Debug, Default)]
@@ -85,7 +108,10 @@ impl Directory {
     fn add_file(&mut self, cur_dir: &Utf8PathBuf, size: u64) {
         let mut parent_dir = self;
         for dir in cur_dir.iter() {
-            parent_dir = parent_dir.children.entry(Utf8PathBuf::from(dir)).or_default();
+            parent_dir = parent_dir
+                .children
+                .entry(Utf8PathBuf::from(dir))
+                .or_default();
         }
         parent_dir.size += size;
     }
@@ -125,7 +151,9 @@ impl Directory {
 }
 
 fn build_tree(input: Vec<String>) -> Directory {
-    let lines = input.iter().map(|l| all_consuming(parse_line)(l).finish().unwrap().1);
+    let lines = input
+        .iter()
+        .map(|l| all_consuming(parse_line)(l).finish().unwrap().1);
 
     let mut cur_dir = Utf8PathBuf::new();
     let mut dir_tree = Directory::default();
@@ -133,19 +161,19 @@ fn build_tree(input: Vec<String>) -> Directory {
     for line in lines {
         match line {
             Line::Command(cmd) => match cmd {
-                Command::Ls => {},
+                Command::Ls => {}
                 Command::Cd(path) => match path.as_str() {
-                    "/" => {},
+                    "/" => {}
                     ".." => {
                         cur_dir.pop();
-                    },
+                    }
                     _ => {
                         cur_dir.push(path);
-                    },
+                    }
                 },
             },
             Line::Entry(entry) => match entry {
-                Entry::Dir(_path) => {},
+                Entry::Dir(_path) => {}
                 Entry::File(size, _path) => dir_tree.add_file(&cur_dir, size),
             },
         }
@@ -173,18 +201,6 @@ fn part_2(input: Vec<String>) -> u64 {
     let needed_size = needed_unused_space - cur_free_space;
 
     dir_tree.find_file_to_delete(needed_size, current_size)
-}
-
-pub fn run() {
-    let input = crate::utils::read_input(2022, 7);
-
-    println!(" Day 07:");
-
-    let p1 = part_1(input.clone());
-    println!("    Part 1 - {p1}");
-
-    let p2 = part_2(input);
-    println!("    Part 2 - {p2}");
 }
 
 #[cfg(test)]
