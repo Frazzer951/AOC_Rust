@@ -1,9 +1,30 @@
+use crate::years::Day;
 use itertools::Itertools;
+
+pub struct AocDay;
+
+impl Day for AocDay {
+    fn run(&self) {
+        let input = crate::utils::read_input(2022, 8);
+
+        println!(" Day 08:");
+
+        let p1 = part_1(input.clone());
+        println!("    Part 1 - {p1}");
+
+        let p2 = part_2(input);
+        println!("    Part 2 - {p2}");
+    }
+}
 
 fn part_1(input: Vec<String>) -> usize {
     let trees: Vec<Vec<u32>> = input
         .iter()
-        .map(|l| l.chars().map(|c: char| c.to_digit(10).unwrap()).collect_vec())
+        .map(|l| {
+            l.chars()
+                .map(|c: char| c.to_digit(10).unwrap())
+                .collect_vec()
+        })
         .collect_vec();
 
     let height = trees.len();
@@ -75,13 +96,20 @@ fn part_1(input: Vec<String>) -> usize {
         }
     }
 
-    visible_trees.iter().map(|t| t.iter().filter(|&b| *b).count()).sum()
+    visible_trees
+        .iter()
+        .map(|t| t.iter().filter(|&b| *b).count())
+        .sum()
 }
 
 fn part_2(input: Vec<String>) -> i32 {
     let trees: Vec<Vec<u32>> = input
         .iter()
-        .map(|l| l.chars().map(|c: char| c.to_digit(10).unwrap()).collect_vec())
+        .map(|l| {
+            l.chars()
+                .map(|c: char| c.to_digit(10).unwrap())
+                .collect_vec()
+        })
         .collect_vec();
 
     let height = trees.len();
@@ -129,19 +157,11 @@ fn part_2(input: Vec<String>) -> i32 {
         }
     }
 
-    *tree_scores.iter().map(|r| r.iter().max().unwrap()).max().unwrap()
-}
-
-pub fn run() {
-    let input = crate::utils::read_input(2022, 8);
-
-    println!(" Day 08:");
-
-    let p1 = part_1(input.clone());
-    println!("    Part 1 - {p1}");
-
-    let p2 = part_2(input);
-    println!("    Part 2 - {p2}");
+    *tree_scores
+        .iter()
+        .map(|r| r.iter().max().unwrap())
+        .max()
+        .unwrap()
 }
 
 #[cfg(test)]

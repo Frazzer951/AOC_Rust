@@ -1,87 +1,72 @@
-use crate::y2022;
-
-pub struct Years {
-    pub years: Vec<Year>,
-}
-
-impl Years {
-    pub fn new() -> Self {
-        Self { years: vec![] }
-    }
-
-    pub fn add_year(mut self, year: Year) -> Self {
-        self.years.push(year);
-        self
-    }
-}
-
-pub struct Year {
-    pub year: u32,
-    pub days: Days,
-}
-
-impl Year {
-    pub fn new(year: u32) -> Self {
-        Self { year, days: Days::new() }
-    }
-
-    pub fn set_day(mut self, day: u32) -> Self {
-        self.days.add_day(day);
-        self
-    }
-}
+use crate::y2022::Y2022;
+use std::collections::HashMap;
 
 pub struct Days {
     pub all: bool,
     pub days: Vec<u32>,
 }
 
-impl Days {
-    pub fn new() -> Self {
-        Self { all: true, days: vec![] }
-    }
+pub trait Day {
+    fn run(&self);
+}
 
-    pub fn add_day(&mut self, day: u32) {
-        self.all = false;
-        self.days.push(day);
+pub trait YearSolutions {
+    fn get_day(&self, day: u32) -> Option<Box<dyn Day>>;
+    fn all_days(&self) -> Vec<Box<dyn Day>> {
+        (1..=25).filter_map(|d| self.get_day(d)).collect()
     }
 }
 
-pub fn run_years(years: Years) {
-    for year in years.years {
-        match year.year {
-            2022 => y2022(year.days),
-            year => {
-                println!("Year `{year}` hasn't been setup yet")
-            },
+pub struct AdventOfCode {
+    years: HashMap<u32, Box<dyn YearSolutions>>,
+}
+
+impl AdventOfCode {
+    pub fn new() -> Self {
+        let mut aoc = Self {
+            years: HashMap::new(),
+        };
+        aoc.add_year(2022, Box::new(Y2022));
+
+        aoc
+    }
+
+    fn add_year(&mut self, year: u32, solutions: Box<dyn YearSolutions>) {
+        self.years.insert(year, solutions);
+    }
+
+    pub fn run_all_years(&self) {
+        let mut years: Vec<&u32> = self.years.keys().collect();
+        years.sort();
+        for year in years {
+            self.run_year(
+                *year,
+                &Days {
+                    all: true,
+                    days: vec![],
+                },
+            )
         }
     }
-}
 
-pub fn y2022(days: Days) {
-    println!("2022");
-    if days.all || days.days.contains(&1) {
-        y2022::day_1::run();
-    }
-    if days.all || days.days.contains(&2) {
-        y2022::day_2::run();
-    }
-    if days.all || days.days.contains(&3) {
-        y2022::day_3::run();
-    }
-    if days.all || days.days.contains(&4) {
-        y2022::day_4::run();
-    }
-    if days.all || days.days.contains(&5) {
-        y2022::day_5::run();
-    }
-    if days.all || days.days.contains(&6) {
-        y2022::day_6::run();
-    }
-    if days.all || days.days.contains(&7) {
-        y2022::day_7::run();
-    }
-    if days.all || days.days.contains(&8) {
-        y2022::day_8::run();
+    pub fn run_year(&self, year: u32, days: &Days) {
+        if let Some(year_solutions) = self.years.get(&year) {
+            println!("\nYear {}", year);
+            if days.all {
+                for day in year_solutions.all_days() {
+                    day.run();
+                }
+            } else {
+                for &day in &days.days {
+                    if let Some(day_solution) = year_solutions.get_day(day) {
+                        day_solution.run();
+                    } else {
+                        println!("Day {} not implemented for year {}", day, year);
+                    }
+                }
+            }
+        } else {
+            println!("Year {} not implemented", year);
+        }
     }
 }

@@ -1,4 +1,21 @@
+use crate::years::Day;
 use std::str::CharIndices;
+
+pub struct AocDay;
+
+impl Day for AocDay {
+    fn run(&self) {
+        let input = crate::utils::read_input(2022, 6)[0].to_owned();
+
+        println!(" Day 06:");
+
+        let p1 = part_1(input.clone());
+        println!("    Part 1 - {p1}");
+
+        let p2 = part_2(input);
+        println!("    Part 2 - {p2}");
+    }
+}
 
 fn find_marker(mut char_stream: CharIndices, num_distinct: usize) -> usize {
     let mut buff = vec![(0, ' '); num_distinct];
@@ -34,18 +51,6 @@ fn part_1(input: String) -> usize {
 
 fn part_2(input: String) -> usize {
     find_marker(input.char_indices(), 14)
-}
-
-pub fn run() {
-    let input = crate::utils::read_input(2022, 6)[0].to_owned();
-
-    println!(" Day 06:");
-
-    let p1 = part_1(input.clone());
-    println!("    Part 1 - {p1}");
-
-    let p2 = part_2(input);
-    println!("    Part 2 - {p2}");
 }
 
 #[cfg(test)]

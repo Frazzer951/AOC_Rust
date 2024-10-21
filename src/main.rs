@@ -24,18 +24,32 @@ enum Commands {
 
 fn main() {
     let cli = Cli::parse();
+    let aoc = years::AdventOfCode::new();
 
-    if let Some(command) = &cli.command {
-        match command {
-            Commands::Add { year, day } => {
-                utils::create_year_day(*year, *day);
-            },
-            Commands::RunDay { year, day } => {
-                years::run_years(years::Years::new().add_year(years::Year::new(*year).set_day(*day)))
-            },
-            Commands::RunYear { year } => years::run_years(years::Years::new().add_year(years::Year::new(*year))),
+    match &cli.command {
+        Some(Commands::Add { year, day }) => {
+            utils::create_year_day(*year, *day);
         }
-    } else {
-        years::run_years(years::Years::new().add_year(years::Year::new(2022)))
+        Some(Commands::RunDay { year, day }) => {
+            aoc.run_year(
+                *year,
+                &years::Days {
+                    all: false,
+                    days: vec![*day],
+                },
+            );
+        }
+        Some(Commands::RunYear { year }) => {
+            aoc.run_year(
+                *year,
+                &years::Days {
+                    all: true,
+                    days: vec![],
+                },
+            );
+        }
+        None => {
+            aoc.run_all_years();
+        }
     }
 }
