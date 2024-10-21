@@ -14,7 +14,7 @@ Collection of my Advent of Code solutions in Rust<br>
 </div>
 
 <!-- start completed section -->
-## In Progess ✅
+## In Progress ✅
 ### 2022
 <details><summary>Days for 2022</summary>
 <p>
@@ -49,7 +49,6 @@ Collection of my Advent of Code solutions in Rust<br>
 
 </p>
 </details>
-
 
 ## Not Started ❌
 ### 2015
