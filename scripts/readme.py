@@ -28,7 +28,7 @@ def run_rust_tests() -> list[dict[str, Any]] | None:
     ]
 
     try:
-        result = subprocess.run(command, capture_output=True, text=True, check=True)
+        result = subprocess.run(command, capture_output=True, text=True)
         json_output = result.stdout
         return [json.loads(output) for output in json_output.split("\n") if output]
     except subprocess.CalledProcessError as e:

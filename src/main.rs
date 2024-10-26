@@ -2,6 +2,7 @@ use clap::{Parser, Subcommand};
 
 mod advent_of_code;
 mod utils;
+mod y2015;
 mod y2022;
 mod years;
 
