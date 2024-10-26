@@ -1,3 +1,4 @@
+use crate::y2015::Y2015;
 use crate::y2022::Y2022;
 use crate::years::{Days, YearSolutions};
 use std::collections::HashMap;
@@ -11,6 +12,7 @@ impl AdventOfCode {
         let mut aoc = Self {
             years: HashMap::new(),
         };
+        aoc.add_year(2015, Box::new(Y2015));
         aoc.add_year(2022, Box::new(Y2022));
 
         aoc

@@ -3,6 +3,7 @@ use clap::{Parser, Subcommand};
 mod advent_of_code;
 mod utils;
 mod y2022;
+mod y2015;
 mod years;
 
 #[derive(Parser)]
