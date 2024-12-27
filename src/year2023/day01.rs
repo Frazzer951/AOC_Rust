@@ -1,4 +1,3 @@
-
 pub fn parse(input: &str) -> Vec<&str> {
     input.lines().collect()
 }
@@ -9,8 +8,8 @@ pub fn part1(input: &[&str]) -> u32 {
     for line in input {
         let nums: String = line.chars().filter(|c| c.is_numeric()).collect();
         if let (Some(first), Some(last)) = (nums.chars().next(), nums.chars().last()) {
-            let first_num = first.to_digit(10).unwrap() as u32;
-            let last_num = last.to_digit(10).unwrap() as u32;
+            let first_num = first.to_digit(10).unwrap();
+            let last_num = last.to_digit(10).unwrap();
 
             sum += first_num * 10 + last_num;
         }
