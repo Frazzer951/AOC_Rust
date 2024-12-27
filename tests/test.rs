@@ -37,4 +37,3 @@ macro_rules! test {
 test!(year2023
     day01
 );
-

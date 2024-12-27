@@ -64,6 +64,4 @@ benchmark!(year2023
     day01
 );
 
-criterion_main!(
-    year2023::benches
-);
+criterion_main!(year2023::benches);

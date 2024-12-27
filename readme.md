@@ -16,6 +16,6 @@ Repo Templated based on [maneatingape repo](https://github.com/maneatingape/adve
 
 ## 2023
 
-| Day | Problem | Solution | Benchmark (μs) |
-| --- | --- | --- | --: |
-| 1 | [Trebuchet?!](https://adventofcode.com/2023/day/1) | [Source](src/year2023/day01.rs) | 637 |
+| Day | Problem                                            | Solution                        | Benchmark (μs) |
+| --- | -------------------------------------------------- | ------------------------------- | -------------: |
+| 1   | [Trebuchet?!](https://adventofcode.com/2023/day/1) | [Source](src/year2023/day01.rs) |            637 |

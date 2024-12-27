@@ -28,7 +28,13 @@ fn main() {
     // Pretty print output for each solution.
     let mut duration = Duration::ZERO;
 
-    for Solution { year, day, path, wrapper } in &solutions {
+    for Solution {
+        year,
+        day,
+        path,
+        wrapper,
+    } in &solutions
+    {
         if let Ok(data) = read_to_string(path) {
             let instant = Instant::now();
             let (part1, part2) = wrapper(data);
@@ -40,7 +46,10 @@ fn main() {
         } else {
             eprintln!("{BOLD}{RED}{year} Day {day:02}{RESET}");
             eprintln!("    Missing input!");
-            eprintln!("    Place input file in {BOLD}{WHITE}{}{RESET}", path.display());
+            eprintln!(
+                "    Place input file in {BOLD}{WHITE}{}{RESET}",
+                path.display()
+            );
         }
     }
 
@@ -81,7 +90,6 @@ macro_rules! run {
         }
     }
 }
-
 
 run!(year2023
     day01
