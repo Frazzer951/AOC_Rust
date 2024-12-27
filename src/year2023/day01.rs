@@ -1,29 +1,15 @@
-use crate::years::Day;
-
-pub struct AocDay;
-
-impl Day for AocDay {
-    fn run(&self) {
-        let input = crate::utils::read_input(2023, 1);
-
-        println!(" Day 01:");
-
-        let p1 = part_1(input.clone());
-        println!("    Part 1 - {p1}");
-
-        let p2 = part_2(input);
-        println!("    Part 2 - {p2}");
-    }
+pub fn parse(input: &str) -> Vec<&str> {
+    input.lines().collect()
 }
 
-fn part_1(input: Vec<String>) -> i32 {
-    let mut sum: i32 = 0;
+pub fn part1(input: &[&str]) -> u32 {
+    let mut sum: u32 = 0;
 
     for line in input {
         let nums: String = line.chars().filter(|c| c.is_numeric()).collect();
         if let (Some(first), Some(last)) = (nums.chars().next(), nums.chars().last()) {
-            let first_num = first.to_digit(10).unwrap() as i32;
-            let last_num = last.to_digit(10).unwrap() as i32;
+            let first_num = first.to_digit(10).unwrap();
+            let last_num = last.to_digit(10).unwrap();
 
             sum += first_num * 10 + last_num;
         }
@@ -32,8 +18,8 @@ fn part_1(input: Vec<String>) -> i32 {
     sum
 }
 
-fn part_2(input: Vec<String>) -> i32 {
-    let mut sum: i32 = 0;
+pub fn part2(input: &[&str]) -> usize {
+    let mut sum: usize = 0;
 
     for line in input {
         let mut numbers = Vec::new();
@@ -42,7 +28,7 @@ fn part_2(input: Vec<String>) -> i32 {
         for (i, _) in chars.iter().enumerate() {
             // Check for digit
             if chars[i].is_numeric() {
-                numbers.push(chars[i].to_digit(10).unwrap() as i32);
+                numbers.push(chars[i].to_digit(10).unwrap() as usize);
                 continue;
             }
 
@@ -75,43 +61,4 @@ fn part_2(input: Vec<String>) -> i32 {
     }
 
     sum
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    fn example_input_p1() -> Vec<String> {
-        ["1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet"]
-            .iter()
-            .map(|s| String::from(*s))
-            .collect::<Vec<_>>()
-    }
-
-    #[test]
-    fn test_p1() {
-        let input = example_input_p1();
-        assert_eq!(part_1(input), 142);
-    }
-
-    fn example_input_p2() -> Vec<String> {
-        [
-            "two1nine",
-            "eightwothree",
-            "abcone2threexyz",
-            "xtwone3four",
-            "4nineeightseven2",
-            "zoneight234",
-            "7pqrstsixteen",
-        ]
-        .iter()
-        .map(|s| String::from(*s))
-        .collect::<Vec<_>>()
-    }
-
-    #[test]
-    fn test_p2() {
-        let input = example_input_p2();
-        assert_eq!(part_2(input), 281);
-    }
 }
