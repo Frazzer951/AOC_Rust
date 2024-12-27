@@ -1,21 +1,11 @@
 [package]
-edition = "2021"
-name    = "aoc_rust"
+name    = "aoc"
 version = "0.1.0"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-camino      = "1.1"
-clap        = { version = "4.5", features = ["derive"] }
-fs-err      = "3.0"
-itertools   = "0.13"
-lazy_static = "1.5"
-nom         = "7.1"
-regex       = "1.11"
-reqwest     = { version = "0.12", features = ["blocking", "cookies"] }
-serde_json  = "1.0"
-tera        = "1.20"
+edition = "2021"
 
 [dev-dependencies]
-test-case = "3.3"
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name    = "benchmark"
+harness = false
